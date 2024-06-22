@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TamAl.az</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .carousel-container {
+    position: absolute;
+    width: 100%;
+    
+    max-width: 1500px;
+    overflow: hidden;
+   margin-top: 230px;
+}
+
+.carousel-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+    flex-shrink: 0;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.heart-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    color: #e74c3c;
+    cursor: pointer;
+}
+
+.heart-icon::before {
+    content: "♡";
+}
+
+.product-info {
+    padding: 10px 0;
+    width: 100%;
+}
+
+.product-name {
+    font-size: 1.5em;
+    margin-top: -15px;
+}
+
+.product-description {
+    font-size: 0.9em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.product-prices {
+    display: flex;
+    align-items: baseline;
+    margin: 10px 0;
+}
+
+.current-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-right: 10px;
+}
+
+.old-price {
+    font-size: 1em;
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.product-rating {
+    font-size: 1.2em;
+    color: #f39c12;
+}
+
+.star {
+    margin: 0 2px;
+}
+
+.add-to-cart {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.cart-icon {
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    width: 45px;
+    transform: translateY(-50%);
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px #616060;
+    margin-left: 5px;
+}
+.carousel-button:hover{
+    background-color: #0e0087;
+    color: white;
+    transition: 0.3s;
+}
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <button class="carousel-button prev" onclick="prevCard()">❮</button>
+        <div class="carousel-wrapper">
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="sekil 1.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 1</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Divin Agzi -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="sekil 2.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 2</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Divin Agzi -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="sekil 5.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 3</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Divin Agzi -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="sekil 6.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 4</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Divin Gotu -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="tt1.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 5</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Divin Agzi -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="tt2.jpg" alt="Məhsulun Şəkli" class="product-image">
+                    <div class="heart-icon"></div>
+                    <div class="product-prices">
+                        <span class="current-price">50 AZN</span>
+                        <span class="old-price">70 AZN</span>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h2 class="product-name">Məhsulun Adı 6</h2>
+                    <p class="product-description">Məhsul haqqında qısa məlumat.</p>
+                    <div class="product-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    </div>
+                    <div class="add-to-cart">
+                        Səbətə Əlavə Et <span class="cart-icon">➔</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-button prev" onclick="prevCard()">❮</button>
+        <button class="carousel-button next" onclick="nextCard()">❯</button>
+    </div>
+    <script>
+let currentIndex = 0;
+let isDragging = false;
+let startPos = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let animationID;
+const wrapper = document.querySelector('.carousel-wrapper');
+const cardWidth = document.querySelector('.product-card').offsetWidth;
+const totalCards = document.querySelectorAll('.product-card').length;
+
+function updateCarousel() {
+    wrapper.style.transform = `translateX(-${currentIndex * (cardWidth + 20)}px)`;
+}
+
+function nextCard() {
+    if (currentIndex < totalCards - 3) { // 3 cards are visible
+        currentIndex++;
+        updateCarousel();
+    }
+}
+
+function prevCard() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+    }
+}
+
+wrapper.addEventListener('mousedown', touchStart);
+wrapper.addEventListener('mouseup', touchEnd);
+wrapper.addEventListener('mouseleave', touchEnd);
+wrapper.addEventListener('mousemove', touchMove);
+wrapper.addEventListener('touchstart', touchStart);
+wrapper.addEventListener('touchend', touchEnd);
+wrapper.addEventListener('touchmove', touchMove);
+
+function touchStart(event) {
+    isDragging = true;
+    startPos = getPositionX(event);
+    animationID = requestAnimationFrame(animation);
+}
+
+function touchEnd() {
+    isDragging = false;
+    cancelAnimationFrame(animationID);
+    const movedBy = currentTranslate - prevTranslate;
+
+    // Məsafəni keçərli yoxlamadan çıxarın
+    // Əgər hər hansı bir dəyişiklik etmək istəyirsinizsə, burada edə bilərsiniz
+}
+
+function touchMove(event) {
+    if (isDragging) {
+        const currentPosition = getPositionX(event);
+        currentTranslate = prevTranslate + currentPosition - startPos;
+    }
+}
+
+function getPositionX(event) {
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+}
+
+function animation() {
+    setSliderPosition();
+    if (isDragging) requestAnimationFrame(animation);
+}
+
+function setSliderPosition() {
+    wrapper.style.transform = `translateX(${currentTranslate}px)`;
+}
+
+function setPositionByIndex() {
+    currentTranslate = currentIndex * -(cardWidth + 20);
+    prevTranslate = currentTranslate;
+    setSliderPosition();
+}
+
+</script>
+
+   
+</body>
+</html>
