@@ -146,6 +146,12 @@
 .next {
     right: 0;
 }
+@media (max-width: 768px) {
+            .prev, .next {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -306,84 +312,101 @@
         <button class="carousel-button next" onclick="nextCard()">❯</button>
     </div>
     <script>
-let currentIndex = 0;
-let isDragging = false;
-let startPos = 0;
-let currentTranslate = 0;
-let prevTranslate = 0;
-let animationID;
-const wrapper = document.querySelector('.carousel-wrapper');
-const cardWidth = document.querySelector('.product-card').offsetWidth;
-const totalCards = document.querySelectorAll('.product-card').length;
+        let currentIndex = 0;
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        const wrapper = document.querySelector('.carousel-wrapper');
+        const cardWidth = document.querySelector('.product-card').offsetWidth;
+        const totalCards = document.querySelectorAll('.product-card').length;
+        let velocity = 0;
+        let lastTimestamp = 0;
 
-function updateCarousel() {
-    wrapper.style.transform = `translateX(-${currentIndex * (cardWidth + 20)}px)`;
-}
+        function updateCarousel() {
+            wrapper.style.transition = 'transform 0.5s ease';
+            wrapper.style.transform = `translateX(-${currentIndex * (cardWidth + 60)}px)`;
+        }
 
-function nextCard() {
-    if (currentIndex < totalCards - 3) { // 3 cards are visible
-        currentIndex++;
-        updateCarousel();
-    }
-}
+        function nextCard() {
+            if (currentIndex < totalCards - 6) { // 3 cards are visible
+                currentIndex++;
+                updateCarousel();
+            }
+        }
 
-function prevCard() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-    }
-}
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        }
 
-wrapper.addEventListener('mousedown', touchStart);
-wrapper.addEventListener('mouseup', touchEnd);
-wrapper.addEventListener('mouseleave', touchEnd);
-wrapper.addEventListener('mousemove', touchMove);
-wrapper.addEventListener('touchstart', touchStart);
-wrapper.addEventListener('touchend', touchEnd);
-wrapper.addEventListener('touchmove', touchMove);
+        function touchStart(event) {
+            isDragging = true;
+            startPos = getPositionX(event);
+            wrapper.style.transition = 'none';
+            animationID = requestAnimationFrame(animation);
+        }
 
-function touchStart(event) {
-    isDragging = true;
-    startPos = getPositionX(event);
-    animationID = requestAnimationFrame(animation);
-}
+        function touchEnd() {
+            isDragging = false;
+            cancelAnimationFrame(animationID);
+            const movedBy = currentTranslate - prevTranslate;
+            const speedThreshold = 200; // Speed threshold for swipe
+            const distanceThreshold = 200; // Distance threshold for swipe
 
-function touchEnd() {
-    isDragging = false;
-    cancelAnimationFrame(animationID);
-    const movedBy = currentTranslate - prevTranslate;
+            if (velocity > speedThreshold && currentIndex < totalCards - 6) {
+                currentIndex++;
+            } else if (velocity < -speedThreshold && currentIndex > 0) {
+                currentIndex--;
+            } else if (movedBy < -distanceThreshold && currentIndex < totalCards - 6) {
+                currentIndex++;
+            } else if (movedBy > distanceThreshold && currentIndex > 0) {
+                currentIndex--;
+            }
 
-    // Məsafəni keçərli yoxlamadan çıxarın
-    // Əgər hər hansı bir dəyişiklik etmək istəyirsinizsə, burada edə bilərsiniz
-}
+            setPositionByIndex();
+        }
 
-function touchMove(event) {
-    if (isDragging) {
-        const currentPosition = getPositionX(event);
-        currentTranslate = prevTranslate + currentPosition - startPos;
-    }
-}
+        function touchMove(event) {
+            if (isDragging) {
+                const currentPosition = getPositionX(event);
+                currentTranslate = prevTranslate + currentPosition - startPos;
+                velocity = currentPosition - startPos; // Calculate velocity
+            }
+        }
 
-function getPositionX(event) {
-    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-}
+        function getPositionX(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        }
 
-function animation() {
-    setSliderPosition();
-    if (isDragging) requestAnimationFrame(animation);
-}
+        function animation(timestamp) {
+            setSliderPosition();
+            if (isDragging) requestAnimationFrame(animation);
+            lastTimestamp = timestamp;
+        }
 
-function setSliderPosition() {
-    wrapper.style.transform = `translateX(${currentTranslate}px)`;
-}
+        function setSliderPosition() {
+            wrapper.style.transform = `translateX(${currentTranslate}px)`;
+        }
 
-function setPositionByIndex() {
-    currentTranslate = currentIndex * -(cardWidth + 20);
-    prevTranslate = currentTranslate;
-    setSliderPosition();
-}
+        function setPositionByIndex() {
+            wrapper.style.transition = 'transform 0.5s ease'; // Apply transition for smooth effect
+            currentTranslate = currentIndex * -(cardWidth + 50);
+            prevTranslate = currentTranslate;
+            setSliderPosition();
+        }
 
-</script>
+        wrapper.addEventListener('mousedown', touchStart);
+        wrapper.addEventListener('mouseup', touchEnd);
+        wrapper.addEventListener('mouseleave', touchEnd);
+        wrapper.addEventListener('mousemove', touchMove);
+        wrapper.addEventListener('touchstart', touchStart);
+        wrapper.addEventListener('touchend', touchEnd);
+        wrapper.addEventListener('touchmove', touchMove);
+    </script>
 
    
 </body>
